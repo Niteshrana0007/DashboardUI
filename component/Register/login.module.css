@@ -1,0 +1,40 @@
+.main {
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    height: 100vh;
+}
+.inner_main {
+    display: flex;
+}
+.logo {
+    text-align: center;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+.content_wrapper {
+    margin-bottom: 30px;
+    text-align: center;
+    padding: 15px;
+}
+.content_box {
+    background-color: #fff;
+    border: 1px solid #ededed;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px 0 rgb(0 0 0 / 20%);
+    margin: 0 auto;
+    overflow: hidden;
+    width: 480px;
+}
+.account_title {
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    text-align: center;
+}
+.account_subtitle {
+    color: #4c4c4c;
+    font-size: 18px;
+    margin-bottom: 30px;
+    text-align: center;
+}

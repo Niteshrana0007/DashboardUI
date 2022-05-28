@@ -1,0 +1,113 @@
+.page_title {
+    color: #1f1f1f;
+    font-size: 26px;
+    font-weight: 550;
+    margin-bottom: 5px;
+}
+.breadcrumb {
+    background-color: transparent;
+    color: #6c757d;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.cards {
+    background: #f7f7f7;
+}
+.card {
+    box-shadow: 0 1px 1px 0 rgb(0 0 0 / 20%);
+    /* height: 108px; */
+    margin-bottom: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.15rem;
+}
+.h3 {
+    font-size: 1.87em;
+    font-weight: 600;
+    margin-bottom: 0px !important;
+}
+.span {
+    font-size: 16px;
+}
+.icon {
+    background-color: rgba(244, 59, 72, 0.2);
+    border-radius: 100%;
+    color: #f43b48;
+    display: inline-block;
+    float: left;
+    font-size: 30px;
+    height: 60px;
+    line-height: 60px;
+    margin-right: 10px;
+    text-align: center;
+    width: 60px;
+}
+.h5 {
+    color: #1f1f1f;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.statistic_card {
+    border: 1px solid #e9ecef;
+    padding: 7px;
+}
+.Task_Statistics {
+    color: #1f1f1f;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.total_task {
+    background-color: #f9f9f9;
+    border: 1px solid #e3e3e3;
+    margin-bottom: 15px;
+    padding: 5px;
+}
+.today_absent {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 600;
+    color: #1f1f1f;
+    font-size: 20px;
+    /* font-weight: 500; */
+    margin-bottom: 20px;
+}
+.profile_logo {
+    background-color: #aaa;
+    border-radius: 50%;
+    color: #fff;
+    display: inline-block;
+    font-weight: 500;
+    height: 38px;
+    line-height: 38px;
+    margin: 0 10px 0 0;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    vertical-align: middle;
+    width: 38px;
+    position: relative;
+    white-space: nowrap;
+}
+.load_more {
+    background-color: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+    display: inline-block;
+    font-size: 14px;
+    padding: 5px 15px;
+}
