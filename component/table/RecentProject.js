@@ -6,38 +6,8 @@ import AdjustIcon from '@mui/icons-material/Adjust';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
-
-const Delete = (record) => {
-  
-  console.log({record},"this data deleted.")
-  deleteData(record)
-
-  function deleteData(record){
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-          'x-hasura-admin-secret': 'kymdKDF2bPeCjaXhSzySVwL17Ph1qT3bxhs1Ga36LVxJ7NmKZiqBDBKsoJMqonAx'
-        },
-        body: JSON.stringify({
-          query: `mutation MyMutation {
-            delete_RecentProjects(where: {key: {_eq: ${record.key}}}) {
-              affected_rows
-            }
-          }
-          `,
-          operationName: "MyMutation"
-    
-        })
-      }
-    fetch('https://alive-alpaca-82.hasura.app/v1/graphql',requestOptions)
-    .then(async response => {
-        console.log("row deleted from clients")
-    })
-    .catch(error => {
-        console.log(error)
-    });
-}
-}
+import { inProjectData } from "../functions/function";
+import { deleteProjectData } from "../functions/function";
 
 const menu = (
     <Menu
@@ -66,7 +36,7 @@ const menu = (
         {
           label: 'Delete',
           key: '2',
-          icon: <Popconfirm title="Sure to delete?" onConfirm={() => Delete(record)}><DeleteOutlineIcon/></Popconfirm>,
+          icon: <Popconfirm title="Sure to delete?" onConfirm={() => deleteProjectData(record)}><DeleteOutlineIcon/></Popconfirm>,
         },
       ]}
     />
@@ -100,7 +70,7 @@ const columns = [
               {action.map(tag => {
                 
                 return (
-                    <Dropdown overlay={actionMenu(record)}>
+                    <Dropdown overlay={actionMenu(record)} key={100}>
                         <MoreVertIcon/>
                     </Dropdown>
                 );
@@ -144,43 +114,12 @@ const datas = [
 function RecentProject() {
   const [data , setData] = useState();
     
-  const inData = () => {
-      const requestOptions = {
-          method: 'POST',
-          headers: {
-            'x-hasura-admin-secret': 'kymdKDF2bPeCjaXhSzySVwL17Ph1qT3bxhs1Ga36LVxJ7NmKZiqBDBKsoJMqonAx'
-          },
-          body: JSON.stringify({
-            query: `query MyQuery {
-              RecentProjects {
-                action
-                key
-                name
-                progress
-                status
-              }
-            }
-            
-            `,
-            operationName: "MyQuery"
-      
-          })
-        }
-      fetch('https://alive-alpaca-82.hasura.app/v1/graphql',requestOptions)
-      .then(async response => {
-         
-          const data = await response.json();
-          setData(data.data.RecentProjects)
-          console.log("from recenrprojects",data.data.RecentProjects)
-      })
-      .catch(error => {
-          console.log(error)
-      });
-  }
-
   useEffect(() => {
       
-      inData()
+    const DATA =  inProjectData();
+    DATA.then(value => {
+      setData(value.data.RecentProjects)
+    });
       
   },[])
     return (

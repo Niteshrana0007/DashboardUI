@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import { Table, Card } from "antd";
+import { inInvoiceData } from "../functions/function";
 
 const columns = [
   {
@@ -79,40 +80,11 @@ const datas = [
 function Invoice() {
   const [data, setData] = useState();
 
-  const inData = () => {
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "x-hasura-admin-secret":
-          "kymdKDF2bPeCjaXhSzySVwL17Ph1qT3bxhs1Ga36LVxJ7NmKZiqBDBKsoJMqonAx",
-      },
-      body: JSON.stringify({
-        query: `query MyQuery {
-                Invoice {
-                  client
-                  due_data
-                  invoice_id
-                  status
-                  total
-                }
-              }
-              `,
-        operationName: "MyQuery",
-      }),
-    };
-    fetch("https://alive-alpaca-82.hasura.app/v1/graphql", requestOptions)
-      .then(async (response) => {
-        const data = await response.json();
-        setData(data.data.Invoice);
-        console.log(data.data.Invoice);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   useEffect(() => {
-    inData();
+    const DATA =  inInvoiceData();
+      DATA.then(value => {
+        setData(value.data.Invoice)
+      });
   }, []);
   return (
     <>

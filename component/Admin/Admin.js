@@ -39,9 +39,8 @@ const TaskStyle = {
 
 function Admin() {
   const [DATA ,SETDATA] = useState(['hello'])
-  console.log(DATA)
   const {user} = useAuth();
-  console.log({user})
+  // console.log({user})
   
   // useEffect(() => {
   //   writeUserData(user);
@@ -82,7 +81,7 @@ function Admin() {
           style={{ justifyContent: "space-around" }}
         >
           {data.Cards.items.map((e) => (
-            <Col className="gutter-row" xs={24} sm={10} md={10} lg={10} xl={6}>
+            <Col className="gutter-row" xs={24} sm={10} md={10} lg={10} xl={6} key={1}>
               <div className={classes.card}>
                 <Card bordered={true} style={{ height: "108px" }}>
                   <div>
@@ -121,7 +120,7 @@ function Admin() {
       {/* joined cards */}
       <Row style={{ rowGap: "25px", marginBottom: "30px" }}>
         {cardData.map((e) => (
-          <Col xs={24} sm={24} md={12} lg={12} xl={6}>
+          <Col xs={24} sm={24} md={12} lg={12} xl={6} key={3}>
             <Card style={cardminStyle}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span>
@@ -154,7 +153,7 @@ function Admin() {
           <Card style={cardStyle}>
             <h5 className={classes.h5}>Statistics</h5>
             {Statistics.map((e) => (
-              <div className={classes.statistic_card}>
+              <div className={classes.statistic_card} key={4}>
                 <p style={{ display: "flex", justifyContent: "space-between" }}>
                   {e.text}{" "}
                   <strong>
@@ -182,7 +181,7 @@ function Admin() {
               <Row gutter={4}>
                 <Col span={12}>
                   <Card>
-                    <div class={classes.statistic_cards}>
+                    <div className={classes.statistic_cards}>
                       <p>Total Tasks</p>
                       <h3 style={{ fontWeight: "600" }}>385</h3>
                     </div>
@@ -190,7 +189,7 @@ function Admin() {
                 </Col>
                 <Col span={12}>
                   <Card>
-                    <div class={classes.statistic_cards}>
+                    <div className={classes.statistic_cards}>
                       <p>Overdue Tasks</p>
                       <h3 style={{ fontWeight: "600" }}>19</h3>
                     </div>
@@ -203,7 +202,7 @@ function Admin() {
             </Col>
             <Col style={{display:"flex" ,flexDirection:'column'}} span={24}>
                 {Statistics.map(e => (
-                    <div style={{display:"flex",justifyContent:'space-between'}}>
+                    <div style={{display:"flex",justifyContent:'space-between'}} key={5}>
                         <div style={{display:"flex"}}>
                             <AdjustIcon style={{color: e.color}} ></AdjustIcon> &nbsp; &nbsp;
                             <p>{e.text}</p>

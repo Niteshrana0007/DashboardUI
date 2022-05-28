@@ -9,6 +9,8 @@ import {
   Typography,
   Input,
 } from "antd";
+import { inPaymentData } from "../functions/function";
+import { upDatePaymentData} from "../functions/function";
 
 const EditableCell = ({
   editing,
@@ -98,7 +100,7 @@ function Payment() {
   };
 
   const save = async (key) => {
-    console.log(key, "from save function");
+    // console.log(key, "from save function");
     try {
       const row = await form.validateFields();
       console.log(row);
@@ -106,8 +108,8 @@ function Payment() {
 
       //API to update data in hasura
       
-      upDateData(row)
-      window.setTimeout (() => {  inData(); }, 100);
+      upDatePaymentData(row)
+      window.setTimeout (() => {  inPaymentData() }, 1000);
       // inData();
       setData(Data);
       
@@ -129,66 +131,8 @@ function Payment() {
     }
   };
 
-  const inData = () => {
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "x-hasura-admin-secret":
-          "kymdKDF2bPeCjaXhSzySVwL17Ph1qT3bxhs1Ga36LVxJ7NmKZiqBDBKsoJMqonAx",
-      },
-      body: JSON.stringify({
-        query: `query MyQuery {
-                Payments {
-                    key
-                    client
-                    date
-                    invoice
-                    total
-                    status
-                  }
-              }
-              `,
-        operationName: "MyQuery",
-      }),
-    };
-    fetch("https://alive-alpaca-82.hasura.app/v1/graphql", requestOptions)
-      .then(async (response) => {
-        const Data = await response.json();
-        setdata(Data.data.Payments);
-        console.log("from payments", Data.data.Payments);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
   //update data in hasura table
-  const upDateData = (row) => {
-    console.log({ row }, "from api");
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "x-hasura-admin-secret":
-          "kymdKDF2bPeCjaXhSzySVwL17Ph1qT3bxhs1Ga36LVxJ7NmKZiqBDBKsoJMqonAx",
-      },
-      body: JSON.stringify({
-        query: `mutation MyMutation {
-              update_Payments(where: {invoice: {_eq: "${row.invoice}"}}, _set: {client: "${row.client}", date: "${row.date}", invoice: "${row.invoice}", status: "${row.status}", total: "${row.total}"}) {
-                affected_rows
-              }
-            }            
-            `,
-        operationName: "MyMutation",
-      }),
-    };
-    fetch("https://alive-alpaca-82.hasura.app/v1/graphql", requestOptions)
-      .then(async (response) => {
-        console.log("data updated successfully");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
+  
   const columns = [
     {
       title: "Invoice ID",
@@ -281,13 +225,17 @@ function Payment() {
     };
   });
   useEffect(() => {
-    inData();
+    
+    const DATA =  inPaymentData();
+      DATA.then(value => {
+        setdata(value.data.Payments)
+      });
   }, []);
   return (
     <>
       <Form form={form} component={false}>
         <Table
-          columns={columns}
+          // columns={columns}
           dataSource={Data}
           pagination={false}
           columns={mergedColumns}

@@ -1,13 +1,11 @@
-// key in form should be unique
-
 import React,{useState} from 'react'
 import { Button, Modal, Form, Input } from 'antd';
 import 'antd/dist/antd.css';
 import { ConnectingAirportsOutlined } from '@mui/icons-material';
+import { inProjectModalData } from '../functions/function';
 
 const ProjectModal = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [data , setData] = useState();
   
   const showModal = () => {
     setIsModalVisible(true);
@@ -23,7 +21,7 @@ const ProjectModal = () => {
 
   const onFinish = (values) => {
     console.log('Success:', values);
-    inData(values);
+    inProjectModalData(values);
     console.log('data sent to hasura')
     setIsModalVisible(false);
     
@@ -31,47 +29,9 @@ const ProjectModal = () => {
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
-    
   };
   
-  const inData = (values) => {
-      const requestOptions = {
-          method: 'POST',
-          headers: {
-            'x-hasura-admin-secret': 'kymdKDF2bPeCjaXhSzySVwL17Ph1qT3bxhs1Ga36LVxJ7NmKZiqBDBKsoJMqonAx'
-          },
-          body: JSON.stringify({
-            query: 
-            `mutation MyMutation {
-                insert_RecentProjects(objects: {action: ["${values.action}"], key: ${Number(values.key)}, name: "${values.project_name}", progress: [${Number(values.progress)}], status: ["${values.status}"]}) {
-                  returning {
-                    action
-                    key
-                    name
-                    progress
-                    status
-                  }
-                }
-              }
-              
-            `,
-            operationName: "MyMutation"
-      
-          })
-        }
-      fetch('https://alive-alpaca-82.hasura.app/v1/graphql',requestOptions)
-      .then(async response => {
-        
-          const data = await response.json();
-          setData(data.data.Invoice)
-          console.log("sent invoice data")
-      })
-      .catch(error => {
-          console.log(error)
-      });
-}
-
-
+ 
   return (
     <>
       <Button type="primary" onClick={showModal}>

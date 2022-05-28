@@ -135,7 +135,6 @@ function Clients() {
       const DATA =  readData();
       DATA.then(value => {
         setData(value.data.Clients)
-        console.log(value,'jkshfishf');
       });
       
   },[])

@@ -2,6 +2,7 @@ import React,{useState,useContext,createContext} from 'react'
 import { Button, Modal, Form, Input } from 'antd';
 import 'antd/dist/antd.css';
 import { ConnectingAirportsOutlined } from '@mui/icons-material';
+import { insertInvoiceData } from '../functions/function';
 
 const InvoiceModal = (props) => {
   
@@ -22,7 +23,7 @@ const InvoiceModal = (props) => {
 
   const onFinish = (values) => {
     console.log('Success:', values);
-    inData(values);
+    insertInvoiceData(values);
     console.log('data sent to hasura');
     setIsModalVisible(false);
   };
@@ -32,42 +33,7 @@ const InvoiceModal = (props) => {
     
   };
   
-  const inData = (values) => {
-      const requestOptions = {
-          method: 'POST',
-          headers: {
-            'x-hasura-admin-secret': 'kymdKDF2bPeCjaXhSzySVwL17Ph1qT3bxhs1Ga36LVxJ7NmKZiqBDBKsoJMqonAx'
-          },
-          body: JSON.stringify({
-            query: `mutation MyMutation {
-              insert_Invoice(objects: {client: "${values.client}", due_data: "${values.duedate}", invoice_id: "${values.InvoiceID}", status: "${values.status}", total: ${values.total}}) {
-                returning {
-                  client
-                  due_data
-                  invoice_id
-                  status
-                  total
-                }
-              }
-            }
-            `,
-            operationName: "MyMutation"
-      
-          })
-        }
-      fetch('https://alive-alpaca-82.hasura.app/v1/graphql',requestOptions)
-      .then(async response => {
-        
-          const data = await response.json();
-          setData(data.data.Invoice)
-          console.log("sent invoice data")
-      })
-      .catch(error => {
-          console.log(error)
-      });
-}
-
-
+  
   return (
     <>
       <Button type="primary" onClick={showModal}>
