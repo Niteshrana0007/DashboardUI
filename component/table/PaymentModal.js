@@ -3,9 +3,9 @@ import { Button, Modal, Form, Input ,DatePicker} from 'antd';
 import 'antd/dist/antd.css';
 import { ConnectingAirportsOutlined } from '@mui/icons-material';
 import moment from 'moment';
-import { insertPaymentData } from '../functions/function';
+import { insertPaymentData,inPaymentData } from '../functions/function';
 
-const PaymentModal = () => {
+const PaymentModal = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [data , setData] = useState();
   
@@ -24,8 +24,13 @@ const PaymentModal = () => {
   const onFinish = (values) => {
     console.log('Success:', values);
     insertPaymentData(values)
-    // let birthday = moment(values.birthday).format("YYYY-MM-DD");
-    // console.log(birthday);
+    setTimeout(() => {
+      const DATA =  inPaymentData();
+      DATA.then(value => {
+      props.setdata(value.data.Payments)
+      console.log(value.data.Payments,"after insertion")
+    });
+    },1000)
     setIsModalVisible(false);
   };
 

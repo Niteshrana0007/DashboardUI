@@ -2,7 +2,7 @@ import React,{useState,useContext,createContext} from 'react'
 import { Button, Modal, Form, Input } from 'antd';
 import 'antd/dist/antd.css';
 import { ConnectingAirportsOutlined } from '@mui/icons-material';
-import { insertInvoiceData } from '../functions/function';
+import { insertInvoiceData ,inInvoiceData } from '../functions/function';
 
 const InvoiceModal = (props) => {
   
@@ -24,6 +24,12 @@ const InvoiceModal = (props) => {
   const onFinish = (values) => {
     console.log('Success:', values);
     insertInvoiceData(values);
+    setTimeout(() => {
+      const DATA =  inInvoiceData();
+      DATA.then(value => {
+        props.setData(value.data.Invoice)
+      });
+    },1000)
     console.log('data sent to hasura');
     setIsModalVisible(false);
   };

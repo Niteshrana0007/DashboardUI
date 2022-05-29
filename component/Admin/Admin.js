@@ -264,17 +264,13 @@ function Admin() {
         <Col style={{boxShadow: "0 1px 1px 0 rgb(0 0 0 / 20%)"}} xs={24} sm={24} md={24} lg={24} xl={12}>
             <Col>
                 <Card>
-                
-                    <h3 className={classes.today_absent}>Invoices <InvoiceModal DATA={DATA}/></h3>
-                    <Invoice/>
-                
+                    <Invoice/>           
                 </Card>
             </Col>
         </Col>
         <Col style={{boxShadow: "0 1px 1px 0 rgb(0 0 0 / 20%)"}} xs={24} sm={24} md={24} lg={24} xl={12}>
             <Col>
                 <Card>
-                    <h3 className={classes.today_absent}>Payments <PaymentModal/></h3>
                     <Payment/>
                 </Card>
             </Col>
@@ -285,7 +281,6 @@ function Admin() {
         <Col style={{boxShadow: "0 1px 1px 0 rgb(0 0 0 / 20%)"}} xs={24} sm={24} md={24} lg={24} xl={12}>
             <Col>
                 <Card>
-                    <h3 className={classes.today_absent}>Clients <ClientModal/></h3>
                     <Clients/>
                 </Card>
             </Col>
@@ -293,7 +288,6 @@ function Admin() {
         <Col style={{boxShadow: "0 1px 1px 0 rgb(0 0 0 / 20%)"}} xs={24} sm={24} md={24} lg={24} xl={12}>
             <Col>
                 <Card>
-                    <h3 className={classes.today_absent}>Recent Projects <ProjectModal/></h3>
                     <RecentProject/>
                 </Card>
             </Col>

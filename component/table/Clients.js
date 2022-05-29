@@ -8,8 +8,59 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { readData } from '../functions/function';
 import { Delete  } from "../functions/function";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import ClientModal from "./ClientModal";
 
-const menu = (
+const today_absent = {
+  display: 'flex',
+  justifyContent:' space-between',
+  marginTop: '0',
+  marginBottom: '0.5em',
+  color: 'rgba(0, 0, 0, 0.85)',
+  fontWeight: 600,
+  color: '#1f1f1f',
+  fontSize: '20px',
+  /* font-weight: 500; */
+  marginBottom: '20px',
+
+}
+
+const datas = [
+    {
+        key: '1',
+        name: 'John Brown',
+        email: 'John@gmail.com',
+        action: ['A'],
+        status: ['Active'],
+    },
+    {
+        key: '2',
+        name: 'Barry Coda',
+        email: 'coda@gmail.com',
+        action: ['A'],
+        status: ['Inactive'],
+    },
+    {
+        key: '3',
+        name: 'Ruby Bartlett',
+        email: 'John@gmail.com',
+        action: ['A'],
+        status: ['Active'],
+    },
+    {
+        key: '4',
+        name: 'Misty Tison',
+        email: 'coda@gmail.com',
+        action: ['A'],
+        status: ['Active'],
+    },
+];
+
+function Clients() {
+  const [data , setData] = useState(null);
+
+  const menu = (
     <Menu
       items={[
         {
@@ -36,12 +87,27 @@ const menu = (
         {
           label: 'Delete',
           key: '2',
-          icon: <Popconfirm title="Sure to delete?" onConfirm={() => Delete(record)}><DeleteOutlineIcon/></Popconfirm>,
+          icon: <Popconfirm 
+                  title="Sure to delete?" 
+                  onConfirm={() => {
+                    Delete(record);
+                    setTimeout(() => {
+                      const DATA =  readData();
+                      DATA.then(value => {
+                        setData(value.data.Clients)
+                      });
+                    },1000)
+
+                  }}
+                  >
+                    <DeleteOutlineIcon/>
+                </Popconfirm>,
         },
       ]}
     />
   );
-const columns = [
+
+  const columns = [
     {
         title: 'Name',
         dataIndex: 'name',
@@ -96,40 +162,8 @@ const columns = [
             </>
           ),
     }    
-];
-const datas = [
-    {
-        key: '1',
-        name: 'John Brown',
-        email: 'John@gmail.com',
-        action: ['A'],
-        status: ['Active'],
-    },
-    {
-        key: '2',
-        name: 'Barry Coda',
-        email: 'coda@gmail.com',
-        action: ['A'],
-        status: ['Inactive'],
-    },
-    {
-        key: '3',
-        name: 'Ruby Bartlett',
-        email: 'John@gmail.com',
-        action: ['A'],
-        status: ['Active'],
-    },
-    {
-        key: '4',
-        name: 'Misty Tison',
-        email: 'coda@gmail.com',
-        action: ['A'],
-        status: ['Active'],
-    },
-];
+  ];
 
-function Clients() {
-  const [data , setData] = useState();
   useEffect(() => {
     
       const DATA =  readData();
@@ -141,15 +175,28 @@ function Clients() {
     return (
         <>
             
-          <Table
-              columns={columns}
-              dataSource={data}
-              pagination={false}
-              scroll={{
-                  x:900,
-                  y:200
-              }}
-          />
+          {
+            data ?
+            <>
+              <h3 style={today_absent}>Clients <ClientModal setData={(val) => setData(val)} /></h3>
+              <Table
+                  columns={columns}
+                  dataSource={data}
+                  pagination={false}
+                  scroll={{
+                      x:900,
+                      y:200
+                  }}
+              />
+            </> : 
+            <Backdrop
+              sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1,width:'690.667',height:'355',position:'absolute' }}
+              open
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
+          }
+      
          
         </>
     );

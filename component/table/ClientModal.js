@@ -2,9 +2,9 @@ import React,{useEffect, useState} from 'react'
 import { Button, Modal, Form, Input } from 'antd';
 import 'antd/dist/antd.css';
 import { ConnectingAirportsOutlined } from '@mui/icons-material';
-import {inClientData} from "../functions/function"
+import {inClientData,readData} from "../functions/function"
 
-const ClientModal = () => {
+const ClientModal = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [data , setData] = useState();
   
@@ -28,6 +28,12 @@ const ClientModal = () => {
   const onFinish = (values) => {
     console.log('Success:', values);
     inClientData(values);
+    setTimeout(() => {
+      const DATA =  readData();
+      DATA.then(value => {
+        props.setData(value.data.Clients)
+      });
+    },1000)
     console.log('data sent to hasura')
     setIsModalVisible(false);
     

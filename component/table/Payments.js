@@ -11,7 +11,19 @@ import {
 } from "antd";
 import { inPaymentData } from "../functions/function";
 import { upDatePaymentData} from "../functions/function";
+import PaymentModal from "./PaymentModal";
 
+const today_absent = {
+    display: 'flex',
+    justifyContent:' space-between',
+    marginTop: '0',
+    marginBottom: '0.5em',
+    color: 'rgba(0, 0, 0, 0.85)',
+    fontWeight: 600,
+    color: '#1f1f1f',
+    fontSize: '20px',
+    marginBottom: '20px',
+}
 const EditableCell = ({
   editing,
   dataIndex,
@@ -100,17 +112,17 @@ function Payment() {
   };
 
   const save = async (key) => {
-    // console.log(key, "from save function");
     try {
       const row = await form.validateFields();
-      console.log(row);
-      console.table(row);
 
       //API to update data in hasura
-      
       upDatePaymentData(row)
-      window.setTimeout (() => {  inPaymentData() }, 1000);
-      // inData();
+      setTimeout(() => {
+        const DATA =  inPaymentData();
+        DATA.then(value => {
+          setdata(value.data.Payments )
+        })
+      },1000)
       setData(Data);
       
       const newData = [...data];
@@ -228,11 +240,13 @@ function Payment() {
     
     const DATA =  inPaymentData();
       DATA.then(value => {
-        setdata(value.data.Payments)
+        setdata(value.data.Payments.sort())
+        // console.table(value.data.Payments.sort(function(a, b){return b - a}))
       });
   }, []);
   return (
     <>
+    <h3 style={today_absent}>Payments <PaymentModal setdata={(val) => setdata(val)} /></h3>
       <Form form={form} component={false}>
         <Table
           // columns={columns}

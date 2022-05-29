@@ -3,8 +3,10 @@ import { Button, Modal, Form, Input } from 'antd';
 import 'antd/dist/antd.css';
 import { ConnectingAirportsOutlined } from '@mui/icons-material';
 import { inProjectModalData } from '../functions/function';
+import { inProjectData } from "../functions/function";
 
-const ProjectModal = () => {
+const ProjectModal = (props) => {
+ 
   const [isModalVisible, setIsModalVisible] = useState(false);
   
   const showModal = () => {
@@ -22,6 +24,14 @@ const ProjectModal = () => {
   const onFinish = (values) => {
     console.log('Success:', values);
     inProjectModalData(values);
+    setTimeout(() => {
+      const DATA =  inProjectData();
+      DATA.then(value => {
+      props.setData(value.data.RecentProjects)
+      console.log(value.data.RecentProjects)
+    });
+    },1000)
+    
     console.log('data sent to hasura')
     setIsModalVisible(false);
     

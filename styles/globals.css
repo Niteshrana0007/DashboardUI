@@ -33,14 +33,7 @@ a {
   .virtual-table-cell {
     padding: inherit;
   }
-  @media (max-width: 600px) {
-    .ant-table-thead > tr > th, .ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td {
-      position: relative;
-      padding: 0px !important;
-      overflow-wrap: break-word;
-    }
-  }
-
+ 
   span.anticon.anticon-hourglass {
     align-items: center;
     display: flex;
